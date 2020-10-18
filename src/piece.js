@@ -153,17 +153,40 @@ const piece = (pieceName, pieceTeam) => {
       default: //Pawn
         if (pieceTeam === "white"){
           if(moveCounter === 0 ){
-            possibleMoves.push([posArray[0], posArray[1] - 1]);
-            possibleMoves.push([posArray[0], posArray[1] - 2]);
+            if (!board.occupiedPos([posArray[0], posArray[1] - 1])) possibleMoves.push([posArray[0], posArray[1] - 1]);
+            if (!board.occupiedPos([posArray[0], posArray[1] - 2])) possibleMoves.push([posArray[0], posArray[1] - 2]);
           } else {
-            possibleMoves.push([posArray[0], posArray[1] - 1]);
+            if (!board.occupiedPos([posArray[0], posArray[1] - 1])) possibleMoves.push([posArray[0], posArray[1] - 1]);
           }
+
+          if (board.occupiedPos([posArray[0] + 1, posArray[1] - 1])) {
+            let pieceOnTile = board.getPieceFromPos([posArray[0] + 1, posArray[1] - 1]);
+
+            if (pieceOnTile.getTeam() === 'black') possibleMoves.push([posArray[0] + 1, posArray[1] - 1]);
+          } 
+          if (board.occupiedPos([posArray[0] - 1, posArray[1] - 1])) {
+            let pieceOnTile = board.getPieceFromPos([posArray[0] - 1, posArray[1] - 1]);
+
+            if (pieceOnTile.getTeam() === 'black') possibleMoves.push([posArray[0] - 1, posArray[1] - 1]);
+          }
+
         } else {
           if(moveCounter === 0 ){
-            possibleMoves.push([posArray[0], posArray[1] + 1]);
-            possibleMoves.push([posArray[0], posArray[1] + 2]);
+            if (!board.occupiedPos([posArray[0], posArray[1] + 1])) possibleMoves.push([posArray[0], posArray[1] + 1]);
+            if (!board.occupiedPos([posArray[0], posArray[1] + 2])) possibleMoves.push([posArray[0], posArray[1] + 2]);
           } else {
-            possibleMoves.push([posArray[0], posArray[1] + 1]);
+            if (!board.occupiedPos([posArray[0], posArray[1] + 1])) possibleMoves.push([posArray[0], posArray[1] + 1]);
+          }
+
+          if (board.occupiedPos([posArray[0] + 1, posArray[1] + 1])) {
+            let pieceOnTile = board.getPieceFromPos([posArray[0] + 1, posArray[1] + 1]);
+
+            if (pieceOnTile.getTeam() === 'white') possibleMoves.push([posArray[0] + 1, posArray[1] + 1]);
+          }
+          if (board.occupiedPos([posArray[0] - 1, posArray[1] + 1])) {
+            let pieceOnTile = board.getPieceFromPos([posArray[0] - 1, posArray[1] + 1]);
+
+            if (pieceOnTile.getTeam() === 'white') possibleMoves.push([posArray[0] - 1, posArray[1] + 1]);
           }
         }
         break;
@@ -221,11 +244,14 @@ const piece = (pieceName, pieceTeam) => {
     return finalPMoves
   }
 
+  const incrementMoveCounter = () => { moveCounter++ }
+
   return {
     getPieceName,
     getSymbol,
     getTeam,
-    getPossibleMoves
+    getPossibleMoves,
+    incrementMoveCounter
   }
 }
 

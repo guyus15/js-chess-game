@@ -96,6 +96,9 @@ const gameManager = () => {
         board.updatePos(movedPieceData[0], null);
         board.updatePos(movedPieceData[1], movedPiece);
 
+        //Increase the move counter for that piece
+        movedPiece.incrementMoveCounter();
+
         currentTeam === 'white' ? currentTeam = 'black' : currentTeam = 'white';
 
         //Display who's turn it is
