@@ -9,6 +9,8 @@ const gameManager = () => {
   const boardEle = document.querySelector('.chess-board');
 
   let currentTeam = 'white';
+  
+  let takenPieces = [];
 
   const initiateBoard = () => {
     //initiates key variables, positions pieces in there starting positions.
@@ -73,7 +75,21 @@ const gameManager = () => {
 
       let piecePossibleMoves = movedPiece.getPossibleMoves(movedPieceData[0], board);
 
+      //Limits the the movement of a piece to the piece's possible moves.
       if (JSON.stringify(piecePossibleMoves).includes(JSON.stringify(targetTilePos))) {
+        let takenPiece = null;
+                
+        //Saves a copy of the taken piece if the target position contains an enemy's piece.
+        if (board.occupiedPos(targetTilePos)) {
+          takenPiece = board.getPieceFromPos(targetTilePos);
+          takenPieces.push(takenPiece);
+
+          let targetTileElement = document.querySelector(`#tile-${targetTilePos[0]}${targetTilePos[1]}`);
+          targetTileElement.innerHTML = "";
+
+          dom.updateTakenPieces(currentTeam, takenPieces);
+        }
+      
         let data = dropEvent.dataTransfer.getData('text');
         dropEvent.target.appendChild(document.getElementById(data));
 
@@ -81,6 +97,9 @@ const gameManager = () => {
         board.updatePos(movedPieceData[1], movedPiece);
 
         currentTeam === 'white' ? currentTeam = 'black' : currentTeam = 'white';
+
+        //Display who's turn it is
+        dom.displayCurrentTeam(currentTeam);
 
         //Resetting selected tile move highlights
         dom.resetHighlights();

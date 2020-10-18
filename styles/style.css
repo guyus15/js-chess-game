@@ -19,8 +19,34 @@ nav {
   font-weight: bolder;
 }
 
+.container {
+  padding: 20px 0;
+  width:100%;
+  margin:auto;
+  text-align: center;
+}
+
+.game-ui {
+  padding: 20px;
+  display: flex;
+}
+
+.piece-container {
+  width: 180px;
+  height: 640px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  color:white;
+  text-align: center;
+}
+
+.piece-container p {  
+  font-size: 40px;
+  transform: translateY(calc(20px));
+}
+
 .chess-board {
-  padding:20px;
   margin: auto;
   width: 640px;
   display: grid;
@@ -28,7 +54,7 @@ nav {
   grid-template-rows: repeat(8, 1fr);
 }
 
-.chess-board-tile{
+.chess-board-tile {
   width:80px;
   height:80px;
   background-color: white;
@@ -37,6 +63,13 @@ nav {
   font-size:40px;
 }
 
-.chess-board-tile:hover{
+.chess-board-tile:hover {
   opacity: 0.9;
+}
+
+#turn-indicator {
+  color:rgb(214, 214, 214);
+  padding: 5px;
+  text-transform: uppercase;
+  letter-spacing: 2px;;
 }

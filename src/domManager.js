@@ -74,8 +74,20 @@ const domManager = () => {
         }
       }
     }
+  }
 
-    
+  const updateTakenPieces = (team, piecesArray) => {
+    const pieceContainer = document.querySelector(`.piece-container.${team}`);
+    pieceContainer.innerHTML = "";
+
+    piecesArray.forEach(piece => {
+      if(piece.getTeam() != team) {
+        let pieceElement = document.createElement('p')
+        pieceElement.textContent = piece.getSymbol();
+
+        pieceContainer.appendChild(pieceElement);
+      }
+    })
   }
 
   const dragstartHandler = (e) => {
@@ -129,6 +141,16 @@ const domManager = () => {
     }));
   }
 
+  const displayCurrentTeam = (team) => {
+    let turnIndicator = document.querySelector('#turn-indicator');
+
+    if (team === 'white') {
+      turnIndicator.textContent = "- White's Turn -";
+    } else {
+      turnIndicator.textContent = "- Black's Turn - ";
+    }
+  }
+
   const highlightTiles = (movesArray) => {                         
     //Responsible for highlighting the possible moves available for each piece.
     movesArray.forEach(tile => {
@@ -146,10 +168,8 @@ const domManager = () => {
   }
 
   const resetHighlights = () => {
-    console.log(highlightedTiles);
-
+    //Responsible for cancelling the highlighting of the possible moves of a piece.
     highlightedTiles.forEach(tile => {
-      console.log(tile);
       let tileElement = document.getElementById(`tile-${tile[0][0]}${tile[0][1]}`);
       tileElement.style.backgroundColor = tile[1];
     })
@@ -160,6 +180,8 @@ const domManager = () => {
   return {
     createBoardElement,
     updateBoardElement,
+    updateTakenPieces,
+    displayCurrentTeam,
     highlightTiles,
     resetHighlights
   }
