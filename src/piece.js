@@ -91,7 +91,7 @@ const piece = (pieceName, pieceTeam) => {
   const getPossibleMoves = (posArray, board) => {
     let possibleMoves = []
 
-    switch (pieceName.toLowerCase()){
+    switch (pieceName.toLowerCase()) {
       case "king":
         possibleMoves.push([posArray[0] + 1, posArray[1]]);
         possibleMoves.push([posArray[0] - 1, posArray[1]]);
