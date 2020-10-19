@@ -151,13 +151,25 @@ const domManager = () => {
   const updateInfoText = (text) => {
     let infoText = document.querySelector('#info-text');
 
+    infoText.style.opacity = "100%";
     infoText.textContent = text;
   }
 
   const clearInfoText = () => {
     let infoText = document.querySelector('#info-text');
 
-    infoText.innerHTML = "";
+    infoText.style.opacity = "0";
+    infoText.textContent = "\n";
+  }
+
+  const toggleBoardOutline = (value) => {
+    if (value) {
+      chessBoard.style.border = "5px solid red";
+      chessBoard.style.borderRadius = "2px";
+    } else {
+      chessBoard.style.border = "";
+      chessBoard.style.borderRadius = "0";
+    }
   }
 
   const highlightTiles = (movesArray) => {                         
@@ -193,6 +205,7 @@ const domManager = () => {
     displayCurrentTeam,
     updateInfoText,
     clearInfoText,
+    toggleBoardOutline,
     highlightTiles,
     resetHighlights
   }

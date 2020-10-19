@@ -55,12 +55,19 @@ const gameManager = () => {
       if (piece.getTeam() === currentTeam) {
         let possibleMoves = piece.getPossibleMoves(piecePos, board);
         dom.highlightTiles(possibleMoves);
+        dom.toggleBoardOutline(false);
+        dom.clearInfoText();
+      } else {
+        //Indicate that the player is not entitled to move this piece.
+        dom.toggleBoardOutline(true);
+        dom.updateInfoText("You cannot move the other player's pieces");
       }
     }
   }
 
   const playerTurn = (e) => {
     dom.clearInfoText();
+    dom.toggleBoardOutline(false);
 
     let movedPieceData = e.detail.lastMovedPiece;
     let dropEvent = e.detail.dropEvent;
@@ -105,6 +112,7 @@ const gameManager = () => {
 
         if(checkForCheck(currentTeam)) {
           dom.updateInfoText("You are in check!");
+          dom.toggleBoardOutline(true);
         }
     
         //Display who's turn it is

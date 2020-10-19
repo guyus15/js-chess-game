@@ -52,6 +52,8 @@ nav {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   grid-template-rows: repeat(8, 1fr);
+  border: 5px solid transparent;
+  transition: border 100ms ease-in;
 }
 
 .chess-board-tile {
@@ -71,11 +73,12 @@ nav {
   color:rgb(214, 214, 214);
   padding: 5px;
   text-transform: uppercase;
-  letter-spacing: 2px;;
+  letter-spacing: 2px;
 }
 
 #info-text {
-  color:rgb(150,150,150);
+  color:rgb(238, 70, 70);
   margin-top:5px;
   letter-spacing: 1px;
+  transition: opacity 250ms ease;
 }
