@@ -100,6 +100,8 @@ const gameManager = () => {
         movedPiece.incrementMoveCounter();
 
         currentTeam === 'white' ? currentTeam = 'black' : currentTeam = 'white';
+        
+        checkForCheck(currentTeam);
 
         //Display who's turn it is
         dom.displayCurrentTeam(currentTeam);
@@ -108,6 +110,31 @@ const gameManager = () => {
         dom.resetHighlights();
       }
     }
+  }
+
+  const checkForCheck = (team) => {
+    let kingPiece = null;
+
+    board.getAllPieces().forEach(piece => {
+      if (piece.getTeam() === team && piece.getPieceName() === 'king') {
+        kingPiece = piece;
+      }
+    });
+
+    let kingPos = board.getPosFromPiece(kingPiece);
+
+    
+    board.getAllPieces().forEach(piece => {
+      if (piece.getTeam() !== team) {
+        let piecePos = board.getPosFromPiece(piece);
+
+        if (JSON.stringify(piece.getPossibleMoves(piecePos, board)).includes(JSON.stringify(kingPos))){
+          console.log("CHECK!");
+        }
+        
+      }
+    });
+    
   }
 
   const play = () => {

@@ -118,9 +118,6 @@ const domManager = () => {
   const dropHandler = (e) => {
     e.preventDefault();
 
-    //var data = e.dataTransfer.getData("text");
-    //e.target.appendChild(document.getElementById(data));
-    
     let lastMoveDetails = []
 
     let lastMoveEndCoords = [];

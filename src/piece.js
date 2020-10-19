@@ -192,7 +192,7 @@ const piece = (pieceName, pieceTeam) => {
         break;
     }
 
-    let currentPiece = board.getPieceFromPos(posArray)
+    let currentPiece = board.getPieceFromPos(posArray);
     let currentTeam = currentPiece.getTeam();
 
     let finalPMoves = [];
