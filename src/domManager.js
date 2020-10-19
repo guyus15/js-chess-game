@@ -148,6 +148,18 @@ const domManager = () => {
     }
   }
 
+  const updateInfoText = (text) => {
+    let infoText = document.querySelector('#info-text');
+
+    infoText.textContent = text;
+  }
+
+  const clearInfoText = () => {
+    let infoText = document.querySelector('#info-text');
+
+    infoText.innerHTML = "";
+  }
+
   const highlightTiles = (movesArray) => {                         
     //Responsible for highlighting the possible moves available for each piece.
     movesArray.forEach(tile => {
@@ -179,6 +191,8 @@ const domManager = () => {
     updateBoardElement,
     updateTakenPieces,
     displayCurrentTeam,
+    updateInfoText,
+    clearInfoText,
     highlightTiles,
     resetHighlights
   }

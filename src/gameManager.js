@@ -60,6 +60,8 @@ const gameManager = () => {
   }
 
   const playerTurn = (e) => {
+    dom.clearInfoText();
+
     let movedPieceData = e.detail.lastMovedPiece;
     let dropEvent = e.detail.dropEvent;
 
@@ -100,9 +102,11 @@ const gameManager = () => {
         movedPiece.incrementMoveCounter();
 
         currentTeam === 'white' ? currentTeam = 'black' : currentTeam = 'white';
-        
-        checkForCheck(currentTeam);
 
+        if(checkForCheck(currentTeam)) {
+          dom.updateInfoText("You are in check!");
+        }
+    
         //Display who's turn it is
         dom.displayCurrentTeam(currentTeam);
 
@@ -113,6 +117,7 @@ const gameManager = () => {
   }
 
   const checkForCheck = (team) => {
+    let inCheck = false;
     let kingPiece = null;
 
     board.getAllPieces().forEach(piece => {
@@ -123,18 +128,18 @@ const gameManager = () => {
 
     let kingPos = board.getPosFromPiece(kingPiece);
 
-    
     board.getAllPieces().forEach(piece => {
       if (piece.getTeam() !== team) {
         let piecePos = board.getPosFromPiece(piece);
 
         if (JSON.stringify(piece.getPossibleMoves(piecePos, board)).includes(JSON.stringify(kingPos))){
-          console.log("CHECK!");
+          inCheck = true;
         }
         
       }
     });
-    
+
+    return inCheck
   }
 
   const play = () => {

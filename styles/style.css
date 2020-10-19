@@ -73,3 +73,9 @@ nav {
   text-transform: uppercase;
   letter-spacing: 2px;;
 }
+
+#info-text {
+  color:rgb(150,150,150);
+  margin-top:5px;
+  letter-spacing: 1px;
+}
