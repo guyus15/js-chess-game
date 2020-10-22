@@ -43,8 +43,6 @@ const gameboard = () => {
   }
 
   const occupiedPos = (posArray) => {
-    //console.log(`OCCUPIED POS: (${posArray})`)
-
     if (board[posArray[1]][posArray[0]]) {
       return true
     } else {

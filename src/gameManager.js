@@ -95,8 +95,8 @@ const gameManager = () => {
           let posInCheck = false;
 
           if (movedPiece.getPieceName() === 'king') {
-            posInCheck = checkForCheck(currentTeam, movedPieceData[1]);
-            console.log(posInCheck);
+            //Checks if the position that current piece has been moved to is in check.
+            posInCheck = checkForPosInCheck(currentTeam, movedPieceData[1]);
           }
 
           if (!posInCheck) {
@@ -123,12 +123,16 @@ const gameManager = () => {
             movedPiece.incrementMoveCounter();
 
             currentTeam === 'white' ? currentTeam = 'black' : currentTeam = 'white';
-
+   
             if(checkForCheck(currentTeam)) {
               dom.updateInfoText("You are in check!");
               dom.toggleBoardOutline(true);
+
+              currentTeam === 'white' ? whiteCheck = true : blackCheck = true;
+            } else {
+              currentTeam === 'white' ? whiteCheck = false : blackCheck = false;
             }
-        
+
             //Display who's turn it is
             dom.displayCurrentTeam(currentTeam);
 
@@ -146,17 +150,40 @@ const gameManager = () => {
     }
   }
 
-  const checkForCheck = (team, kingPos) => {
-    let inCheck = false;
-    
+  const checkForCheck = (team) => {
+    let inCheck = false;    
+    let kingPos = null;
+
+    board.getAllPieces().forEach(piece => {
+      if (piece.getPieceName() === 'king' && piece.getTeam() === team) {
+        kingPos = board.getPosFromPiece(piece);
+      }
+    })
+
     board.getAllPieces().forEach(piece => {
       if (piece.getTeam() !== team) {
         let piecePos = board.getPosFromPiece(piece);
 
-        if (JSON.stringify(piece.getPossibleMoves(piecePos, board)).includes(JSON.stringify(kingPos))){
+        if (JSON.stringify(piece.getMovesForCheck(piecePos, board)).includes(JSON.stringify(kingPos))) {
           inCheck = true;
         }
         
+      }
+    });
+
+    return inCheck
+  }
+
+  const checkForPosInCheck = (team, posArray) => {
+    let inCheck = false;
+
+    board.getAllPieces().forEach(piece => {
+      if (piece.getTeam() !== team) {
+        let piecePos = board.getPosFromPiece(piece);
+
+        if (JSON.stringify(piece.getMovesForCheck(piecePos, board)).includes(JSON.stringify(posArray))) {
+          inCheck = true;
+        }        
       }
     });
 

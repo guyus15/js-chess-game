@@ -244,6 +244,26 @@ const piece = (pieceName, pieceTeam) => {
     return finalPMoves
   }
 
+  //Get moves to be used for the checkForCheck() method.
+  //Primarily used to limit moves for pawns.
+  const getMovesForCheck = (posArray, board) => {
+    let checkMoves = []
+
+    if (pieceName === 'pawn') {
+      if (getTeam() === 'white') {
+        checkMoves.push([posArray[0] + 1, posArray[1] - 1]);
+        checkMoves.push([posArray[0] - 1, posArray[1] - 1]);
+      } else {
+        checkMoves.push([posArray[0] + 1, posArray[1] + 1]);
+        checkMoves.push([posArray[0] - 1, posArray[1] + 1]);
+      }
+    } else {
+      checkMoves = getPossibleMoves(posArray, board)
+    }
+
+    return checkMoves
+  }
+
   const incrementMoveCounter = () => { moveCounter++ }
 
   return {
@@ -251,6 +271,7 @@ const piece = (pieceName, pieceTeam) => {
     getSymbol,
     getTeam,
     getPossibleMoves,
+    getMovesForCheck,
     incrementMoveCounter
   }
 }
